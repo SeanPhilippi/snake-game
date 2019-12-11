@@ -58,7 +58,7 @@ while True:
   if key == curses.KEY_LEFT:
     new_head[1] -= 1
   if key == curses.KEY_RIGHT:
-    new_head[0] += 1
+    new_head[1] += 1
 
   #insert new head of snake
   snake.insert(0, new_head)
@@ -69,8 +69,8 @@ while True:
     while food is None:
       # generate new food at random y and x coords within bounds of screen height and width
       new_food = [
-        random.randInt(1, screen_height - 1),
-        random.randInt(1, screen_width - 1)
+        random.randint(1, screen_height - 1),
+        random.randint(1, screen_width - 1)
       ]
       # if the newly generated food coords are not within the snake coords, assign to food, else assign None
       food = new_food if new_food not in snake else None
@@ -81,5 +81,5 @@ while True:
     tail = snake.pop()
     # replace with ' ' at the tail coords
     window.addch(tail[0], tail[1], ' ')
-  # adding the snake to the board
+  # adding the snake to the board at y and x positions with ASC checkerboard character
   window.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
