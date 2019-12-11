@@ -4,15 +4,14 @@ import random
 # terminal handling for character-cell displays
 import curses
 # initializes the library, returns a window object which represents the whole screen. short for initialize screen
+
 screen = curses.initscr()
-print('screen', screen)
 # option for setting cursor visibility, 0 is invisible, 1 is visible (often underline), 2 is very visible (often block cursor)
 curses.curs_set(0)
 # getmaxyx() returns a tuple of the height and width of the window. destructuring as screen_height and screen_width
 screen_height, screen_width = screen.getmaxyx()
 # create a new window object with newwin() and give it nlines (height), ncols (width), beginning y, and beginning x values
 window = curses.newwin(screen_height, screen_width, 0, 0)
-print('window', window)
 # accept keypad input (might not need this?)
 window.keypad(1)
 # refresh the screen every 100ms
@@ -30,9 +29,6 @@ snake = [
 # food position coords
 food = [screen_height // 2, screen_width // 2]
 # add character a y, x coords
-print(window.getch())
-print('f1', food[0])
-print('f2', food[1])
 window.addch(food[0], food[1], curses.ACS_PI)
 # simulates press of right key with curses
 key = curses.KEY_RIGHT
@@ -74,7 +70,7 @@ while True:
       # generate new food at random y and x coords within bounds of screen height and width
       new_food = [
         random.randInt(1, screen_height - 1),
-        random.randInt(1, screen_width - 1),
+        random.randInt(1, screen_width - 1)
       ]
       # if the newly generated food coords are not within the snake coords, assign to food, else assign None
       food = new_food if new_food not in snake else None
@@ -85,3 +81,5 @@ while True:
     tail = snake.pop()
     # replace with ' ' at the tail coords
     window.addch(tail[0], tail[1], ' ')
+  # adding the snake to the board
+  window.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
